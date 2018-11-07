@@ -102,6 +102,7 @@ class InventoryTable extends React.Component {
         super(props);
         this.state = {
             rows: [],
+            itemsIdArray: [],
             colors: [
                 'BLACK',
                 'WHITE',
@@ -132,6 +133,7 @@ class InventoryTable extends React.Component {
                     });
                 }
             }
+            this.setState({ItemIdArray});
             callback(ItemIdArray);
         })
     }
@@ -144,7 +146,12 @@ class InventoryTable extends React.Component {
                 let count = 0;
                 if (keysArray.indexOf(obj.id) !== -1) {
                     if (obj.id !== 'bi' && snap.val()[obj.id][color] !== undefined) {
-                        count = Object.keys(snap.val()[obj.id][color]).length;
+                        const items = snap.val()[obj.id][color];
+                        for(const item in items){
+                            if(items[item].status.trim().toUpperCase() === 'ACTIVE'){
+                                count++;
+                            }
+                        }
                     }
                 }
                 newRowsArray.push({
@@ -163,6 +170,18 @@ class InventoryTable extends React.Component {
                 this.setState({ rows: newRowsArray });
             })
         })
+    }
+
+    componentDidMount = () => {
+        db.ref('/inventory').on('value', () => {
+            this.populateRowsObjects(this.state.ItemIdArray, this.state.currentColor, newRowsArray => {
+                this.setState({rows: newRowsArray});
+            })
+        })
+    }
+
+    componentWillUnmount = () => {
+        db.ref('/inventory').off();
     }
 
     selectChangeHandler = (event) => {
