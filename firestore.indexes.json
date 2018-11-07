@@ -1,0 +1,36 @@
+{
+  "indexes": [
+    {
+      "collectionId": "parts",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "status",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "type",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "name",
+          "mode": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionId": "parts",
+      "state": "READY",
+      "fields": [
+        {
+          "fieldPath": "type",
+          "mode": "ASCENDING"
+        },
+        {
+          "fieldPath": "name",
+          "mode": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}
